@@ -94,14 +94,14 @@ def compare(card, oppoCard, score):
     return score
 
 def compare_score(score, oppoScore):
-    print('Your score is {}, your opponent score is {}, '.format(score, oppoScore), end='')
+    print('Your score is {}, your opponent score is {}. '.format(score, oppoScore), end='')
     if score == oppoScore:
-        print('draw')
+        print('Draw！')
     elif score < oppoScore:
-        print('you loss')
+        print('You loss！')
     elif score > oppoScore:
-        print('congratulation, you win')
-    print('! Thank you for playing the game')
+        print('Congratulation, you win!')
+    print('Thank you for playing the game！')
 
 if __name__ == '__main__':
     main()
