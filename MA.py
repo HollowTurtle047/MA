@@ -1,5 +1,5 @@
 
-import pygame, sys, os, zmq
+import zmq
 
 CARDS = ['1','2','3','4','5','6','7','8','9','B']
 
@@ -7,7 +7,7 @@ def main():
     selectSC()
     
 def selectSC():
-    strIn = valid_input(['0','1','Q','q'], '0-Server 1-Client Q-Quit:')
+    strIn = valid_input(['0','1','Q'], '0-Server 1-Client Q-Quit:')
     if strIn == '0':
         # server
         print('server')
@@ -16,7 +16,7 @@ def selectSC():
         # client
         print('client')
         client()
-    elif strIn == 'Q' or 'q':
+    elif strIn == 'Q':
         print('Quit')
 
 def server():
@@ -30,14 +30,23 @@ def server():
         if not cards:
             break
         
-        message = socket.recv()
-        print("Received: %s" % message)
-        socket.send_string("I am OK!")
+        myCard = valid_input(cards,\
+            '\r\ncards:\r\n[' + '] ['.join(cards) + ']')
+        cards.remove(myCard) # use the card
+        print('Wating opponent')
+        oppoCard = socket.recv_string() # wating message
+        score = compare(myCard, oppoCard, score)
+        socket.send_string(myCard) # send my card
         
+    oppoScore = socket.recv_string()
+    socket.send_string(str(score))
+    compare_score(score, int(oppoScore))
+
 def client():
     context = zmq.Context(2)
     socket = context.socket(zmq.REQ)
-    socket.connect("tcp://localhost:5555")
+    address = input('Please input host IP address:\r\n')
+    socket.connect('tcp://' + address + ':5555')
     cards = CARDS
     score = 0
     
@@ -45,18 +54,54 @@ def client():
         if not cards:
             break
         
-        strIn = valid_input(cards, cards)
-        socket.send_string(strIn)
+        myCard = valid_input(cards, \
+            '\r\ncards:\r\n[' + '] ['.join(cards) + ']')
+        cards.remove(myCard)  # use the card
+        socket.send_string(myCard)
+        print('Wating opponent')
+        oppoCard = socket.recv_string() # wating message
+        score = compare(myCard, oppoCard, score)
         
-    
-    response = socket.recv()
-    print("response: %s" % response)
+    socket.send_string(str(score))
+    oppoScore = socket.recv_string()
+    compare_score(score, int(oppoScore))
     
 def valid_input(valid_list, mesg):
     while True:
-        inputStr = input(mesg + '\r\n')
+        inputStr = input(mesg + '\r\n').upper()
         if inputStr in valid_list:
             return inputStr
+        print('Invalid input')
+        
+def compare(card, oppoCard, score):
+    if card == oppoCard:
+        score += 1
+        string = 'same'
+    elif oppoCard == 'B':
+        score += 1
+        string = 'your hourse is boomshagalaga'
+    elif card == 'B':
+        score += 1
+        string = 'you exploded the hourse'
+    elif card < oppoCard:
+        string = 'loss'
+    elif card > oppoCard:
+        score += 2
+        string = 'win'
+    else:
+        exit()
+    print('{} vs {}, {}, your score: {}'.format(card, oppoCard, string, score))
+    return score
+
+def compare_score(score, oppoScore):
+    print('Your score is {}, your opponent score is {}, '.format(score, oppoScore), end='')
+    if score == oppoScore:
+        print('draw')
+    elif score < oppoScore:
+        print('you loss')
+    elif score > oppoScore:
+        print('congratulation, you win')
+    print('! Thank you for playing the game')
 
 if __name__ == '__main__':
     main()
