@@ -4,6 +4,7 @@ import zmq
 CARDS = ['1','2','3','4','5','6','7','8','9','B']
 
 def main():
+    welcome()
     selectSC()
     
 def selectSC():
@@ -103,6 +104,17 @@ def compare_score(score, oppoScore):
         print('Congratulation, you win!')
     print('Thank you for playing the game！')
 
+def welcome():
+    print('='*30)
+    print('='*30)
+    print(r'''Welcome to Zha MA! (\_/) 
+                 ,((((^`\
+                ((((  (6 \ 
+              ,((((( ,    \
+            ,(((((  /"._  ,`,
+           ,((((   /    `-.-' ''')
+    print('='*30)
+    
 if __name__ == '__main__':
     main()
 
