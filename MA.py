@@ -45,7 +45,7 @@ def server():
 def client():
     context = zmq.Context(2)
     socket = context.socket(zmq.REQ)
-    address = input('Please input host IP address:\r\n')
+    address = input('Please input server IP address:\r\n')
     socket.connect('tcp://' + address + ':5555')
     cards = CARDS
     score = 0
