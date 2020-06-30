@@ -68,7 +68,7 @@ def client():
     compare_score(score, int(oppoScore))
     
 def valid_input(valid_list, mesg):
-    # TODO flush buffer
+    flush_input() # flush buffer
     while True:
         inputStr = input(mesg + '\r\n').upper()
         if inputStr in valid_list:
@@ -104,6 +104,15 @@ def compare_score(score, oppoScore):
     elif score > oppoScore:
         print('Congratulation, you win!')
     print('Thank you for playing the game!')
+
+def flush_input():
+    try:
+        import msvcrt
+        while msvcrt.kbhit():
+            msvcrt.getch()
+    except ImportError:
+        import sys, termios    #for linux/unix
+        termios.tcflush(sys.stdin, termios.TCIOFLUSH)
 
 def welcome():
     print('='*30)
