@@ -98,12 +98,12 @@ def compare(card, oppoCard, score):
 def compare_score(score, oppoScore):
     print('Your score is {}, your opponent score is {}. '.format(score, oppoScore), end='')
     if score == oppoScore:
-        print('Draw！')
+        print('Draw!')
     elif score < oppoScore:
-        print('You loss！')
+        print('You loss!')
     elif score > oppoScore:
         print('Congratulation, you win!')
-    print('Thank you for playing the game！')
+    print('Thank you for playing the game!')
 
 def welcome():
     print('='*30)
