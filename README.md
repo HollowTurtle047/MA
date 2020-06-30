@@ -1,5 +1,7 @@
 # MA
 
+test in python3
+
 download MA.py is enough
 
 run MA.py
