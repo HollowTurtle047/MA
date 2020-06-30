@@ -1,5 +1,5 @@
 
-import zmq
+import zmq, sys
 
 CARDS = ['1','2','3','4','5','6','7','8','9','B']
 
@@ -68,6 +68,7 @@ def client():
     compare_score(score, int(oppoScore))
     
 def valid_input(valid_list, mesg):
+    # TODO flush buffer
     while True:
         inputStr = input(mesg + '\r\n').upper()
         if inputStr in valid_list:
@@ -106,7 +107,7 @@ def compare_score(score, oppoScore):
 
 def welcome():
     print('='*30)
-    print('='*30)
+    print('-'*30)
     print(r'''Welcome to Zha MA! (\_/) 
                  ,((((^`\
                 ((((  (6 \ 

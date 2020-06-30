@@ -2,6 +2,8 @@
 
 test in python3
 
+require pyzmq
+
 download MA.py is enough
 
 run MA.py
