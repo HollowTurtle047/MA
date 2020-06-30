@@ -96,7 +96,7 @@ def compare(card, oppoCard, score):
     return score
 
 def compare_score(score, oppoScore):
-    print('Your score is {}, your opponent score is {}. '.format(score, oppoScore), end='')
+    print('\r\nYour score is {}, your opponent score is {}. '.format(score, oppoScore), end='')
     if score == oppoScore:
         print('Draw!')
     elif score < oppoScore:
