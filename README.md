@@ -1,5 +1,7 @@
 # MA
 
+download MA.py is enough
+
 run MA.py
 
 type '0' to host a server
